@@ -1,66 +1,57 @@
 require_relative("../db/sql_runner")
 
-class User
+class Film
 
   attr_reader :id
-  attr_accessor :name
+  attr_accessor :title, :price
 
   def initialize( options )
     @id = options['id'].to_i if options['id']
-    @name = options['name']
+    @title = options['title']
+    @price = options['price']
   end
 
   def save()
-    sql = "INSERT INTO users
+    sql = "INSERT INTO films
     (
-      name
+      title,
+      price
     )
     VALUES
     (
-      $1
+      $1, $2
     )
     RETURNING id"
-    values = [@name]
-    user = SqlRunner.run( sql, values ).first
-    @id = user['id'].to_i
+    values = [@title, @price]
+    film = SqlRunner.run( sql, values ).first
+    @id = film['id'].to_i
   end
-
-  def locations()
-    sql = "SELECT locations.*
-    FROM locations
-    INNER JOIN visits
-    ON visits.location_id = locations.id
-    WHERE user_id = $1"
-    values = [@id]
-    location_data = SqlRunner.run(sql, values)
-    return Location.map_items(location_data)
-  end
-
-  def reviews()
-    sql = "SELECT locations.*, visits.*
-    FROM locations
-    INNER JOIN visits
-    ON visits.location_id = locations.id
-    WHERE user_id = $1"
-    values = [@id]
-    results = SqlRunner.run(sql, values)
-    return results.map { |result| "#{result['name']}: #{result['review']}" }
-  end
-
-  def self.all()
-    sql = "SELECT * FROM users"
-    user_data = SqlRunner.run(sql)
-    return User.map_items(user_data)
-  end
-
-  def self.delete_all()
-   sql = "DELETE FROM users"
-   SqlRunner.run(sql)
-  end
-
-  def self.map_items(user_data)
-    result = user_data.map { |user| User.new( user ) }
-    return result
-  end
-
-end
+#
+#   def users()
+#     sql = "SELECT users.*
+#     FROM users
+#     INNER JOIN visits
+#     ON visits.user_id = users.id
+#     WHERE location_id = $1"
+#     values = [@id]
+#     user_data = SqlRunner.run(sql, values)
+#     return User.map_items(user_data)
+#   end
+#
+#   def self.all()
+#     sql = "SELECT * FROM locations"
+#     location_data = SqlRunner.run(sql)
+#     return Location.map_items(location_data)
+#   end
+#
+#   def self.delete_all()
+#    sql = "DELETE FROM locations"
+#    SqlRunner.run(sql)
+#   end
+#
+#   def self.map_items(location_data)
+#     result = location_data.map { |location| Location.new( location ) }
+#     return result
+#   end
+#
+ end
