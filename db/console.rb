@@ -1,12 +1,12 @@
-require_relative( 'models/customer' )
-require_relative( 'models/film' )
-require_relative( 'models/ticket' )
+require_relative( '../models/customer.rb' )
+require_relative( '../models/film.rb' )
+require_relative( '../models/ticket.rb' )
 
 require( 'pry-bye' )
 
-Ticket.delete_all()
-Film.delete_all()
-Customer.delete_all()
+# Ticket.delete_all()
+# Film.delete_all()
+# Customer.delete_all()
 
 customer1 = Customer.new({ 'name' => 'Fred Bloggs', 'funds' => 50 })
 customer1.save()
