@@ -1,8 +1,8 @@
-require_relative("../db/sql_runner")
+require_relative("../db/sql_runner.rb")
 
 class Customer
 
-  attr_reader :id :name
+  attr_reader :id, :name
   attr_accessor :funds
 
   def initialize( options )
@@ -15,7 +15,8 @@ class Customer
   def save()
     sql = "INSERT INTO customers
     (
-      name, funds
+      name,
+      funds
     )
     VALUES
     (
@@ -65,4 +66,4 @@ class Customer
 #     return result
 #   end
 #
- end
+end

@@ -1,6 +1,6 @@
 require_relative("../db/sql_runner")
-require_relative("customer")
-require_relative("film")
+require_relative("./customer.rb")
+require_relative("./film.rb")
 
 class Ticket
 
@@ -12,24 +12,23 @@ class Ticket
     @customer_id = options['customer_id'].to_i
     @film_id = options['film_id'].to_i
   end
-#
-#   def save()
-#     sql = "INSERT INTO visits
-#     (
-#       user_id,
-#       location_id,
-#       review
-#     )
-#     VALUES
-#     (
-#       $1, $2, $3
-#     )
-#     RETURNING id"
-#     values = [@user_id, @location_id, @review]
-#     visit = SqlRunner.run( sql,values ).first
-#     @id = visit['id'].to_i
-#   end
-#
+
+  def save()
+    sql = "INSERT INTO tickets
+    (
+      customer_id,
+      film_id
+    )
+    VALUES
+    (
+      $1, $2
+    )
+    RETURNING id"
+    values = [@customer_id, @film_id]
+    ticket = SqlRunner.run( sql,values ).first
+    @id = ticket['id'].to_i
+  end
+
 #   def user()
 #     sql = "SELECT *
 #     FROM users
@@ -64,4 +63,4 @@ class Ticket
 #     return result
 #   end
 #
-# end
+end
