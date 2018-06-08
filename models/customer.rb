@@ -44,17 +44,17 @@ class Customer
     SqlRunner.run(sql)
   end
 
-#   def locations()
-#     sql = "SELECT locations.*
-#     FROM locations
-#     INNER JOIN visits
-#     ON visits.location_id = locations.id
-#     WHERE user_id = $1"
-#     values = [@id]
-#     location_data = SqlRunner.run(sql, values)
-#     return Location.map_items(location_data)
-#   end
-#
+  def films()
+    sql = "SELECT films.*
+    FROM films
+    INNER JOIN tickets
+    ON tickets.films_id = films.id
+    WHERE customer_id = $1"
+    values = [@id]
+    film_data = SqlRunner.run(sql, values)
+    return Film.map_items(film_data)
+  end
+
 #   def reviews()
 #     sql = "SELECT locations.*, visits.*
 #     FROM locations

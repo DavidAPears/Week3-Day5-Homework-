@@ -45,23 +45,23 @@ class Ticket
     SqlRunner.run(sql)
   end
 
-#   def user()
-#     sql = "SELECT *
-#     FROM users
-#     WHERE id = $1"
-#     values = [@user_id]
-#     user = SqlRunner.run(sql, values).first
-#     return User.new(user)
-#   end
-#
-#   def location()
-#     sql = "SELECT *
-#     FROM locations
-#     WHERE id = $1"
-#     values = [@location_id]
-#     location = SqlRunner.run(sql, values).first
-#     return Location.new(location)
-#   end
+  def customer()
+    sql = "SELECT *
+    FROM customers
+    WHERE id = $1"
+    values = [@customer_id]
+    customer = SqlRunner.run(sql, values).first
+    return Customer.new(customer)
+  end
+
+  def film()
+    sql = "SELECT *
+    FROM films
+    WHERE id = $1"
+    values = [@film_id]
+    film = SqlRunner.run(sql, values).first
+    return Film.new(film)
+  end
 #
 #
 #
