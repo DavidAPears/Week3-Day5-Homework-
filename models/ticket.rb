@@ -40,6 +40,11 @@ class Ticket
     return result
   end
 
+  def self.delete_all()
+    sql = "DELETE FROM tickets"
+    SqlRunner.run(sql)
+  end
+
 #   def user()
 #     sql = "SELECT *
 #     FROM users
@@ -60,10 +65,7 @@ class Ticket
 #
 #
 #
-#   def self.delete_all()
-#    sql = "DELETE FROM visits"
-#    SqlRunner.run(sql)
-#   end
+#
 #
 #
 #

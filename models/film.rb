@@ -36,6 +36,11 @@ class Film
      result = film_data.map { |film| Film.new( film ) }
      return result
   end
+
+  def self.delete_all()
+   sql = "DELETE FROM film2s"
+   SqlRunner.run(sql)
+  end
 #
 #   def users()
 #     sql = "SELECT users.*
@@ -50,10 +55,7 @@ class Film
 #
 #
 #
-#   def self.delete_all()
-#    sql = "DELETE FROM locations"
-#    SqlRunner.run(sql)
-#   end
+#
 #
 #
 #

@@ -38,7 +38,12 @@ class Customer
     result = customer_data.map { |customer| Customer.new( customer ) }
     return result
   end
-#
+
+  def self.delete_all()
+    sql = "DELETE FROM customers"
+    SqlRunner.run(sql)
+  end
+
 #   def locations()
 #     sql = "SELECT locations.*
 #     FROM locations
@@ -63,10 +68,7 @@ class Customer
 #
 
 
-#   def self.delete_all()
-#    sql = "DELETE FROM users"
-#    SqlRunner.run(sql)
-#   end
+#
 #
 
 #
