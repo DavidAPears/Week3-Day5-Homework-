@@ -25,6 +25,17 @@ class Film
     film = SqlRunner.run( sql, values ).first
     @id = film['id'].to_i
   end
+
+  def self.all()
+    sql = "SELECT * FROM films"
+    film_data = SqlRunner.run(sql)
+    return Film.map_items(film_data)
+  end
+
+  def self.map_items(film_data)
+     result = film_data.map { |film| Film.new( film ) }
+     return result
+  end
 #
 #   def users()
 #     sql = "SELECT users.*
@@ -37,20 +48,13 @@ class Film
 #     return User.map_items(user_data)
 #   end
 #
-#   def self.all()
-#     sql = "SELECT * FROM locations"
-#     location_data = SqlRunner.run(sql)
-#     return Location.map_items(location_data)
-#   end
+#
 #
 #   def self.delete_all()
 #    sql = "DELETE FROM locations"
 #    SqlRunner.run(sql)
 #   end
 #
-#   def self.map_items(location_data)
-#     result = location_data.map { |location| Location.new( location ) }
-#     return result
-#   end
 #
- end
+#
+end

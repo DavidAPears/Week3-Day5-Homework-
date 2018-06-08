@@ -8,7 +8,7 @@ class Customer
   def initialize( options )
     @id = options['id'].to_i if options['id']
     @name = options['name']
-    @funds = options['fund']
+    @funds = options['funds'].to_i
 
   end
 
@@ -23,9 +23,20 @@ class Customer
       $1, $2
     )
     RETURNING id"
-    values = [@name, @price]
+    values = [@name, @funds]
     customer = SqlRunner.run( sql, values ).first
     @id = customer['id'].to_i
+  end
+
+  def self.all()
+    sql = "SELECT * FROM customers"
+    user_data = SqlRunner.run(sql)
+    return Customer.map_items(user_data)
+  end
+
+  def self.map_items(customer_data)
+    result = customer_data.map { |customer| Customer.new( customer ) }
+    return result
   end
 #
 #   def locations()
@@ -50,20 +61,13 @@ class Customer
 #     return results.map { |result| "#{result['name']}: #{result['review']}" }
 #   end
 #
-#   def self.all()
-#     sql = "SELECT * FROM users"
-#     user_data = SqlRunner.run(sql)
-#     return User.map_items(user_data)
-#   end
-#
+
+
 #   def self.delete_all()
 #    sql = "DELETE FROM users"
 #    SqlRunner.run(sql)
 #   end
 #
-#   def self.map_items(user_data)
-#     result = user_data.map { |user| User.new( user ) }
-#     return result
-#   end
+
 #
 end
