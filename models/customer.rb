@@ -30,8 +30,8 @@ class Customer
 
   def self.all()
     sql = "SELECT * FROM customers"
-    user_data = SqlRunner.run(sql)
-    return Customer.map_items(user_data)
+    customer_data = SqlRunner.run(sql)
+    return Customer.map_items(customer_data)
   end
 
   def self.map_items(customer_data)
@@ -55,21 +55,31 @@ class Customer
     return Film.map_items(film_data)
   end
 
-#   def reviews()
-#     sql = "SELECT locations.*, visits.*
-#     FROM locations
-#     INNER JOIN visits
-#     ON visits.location_id = locations.id
-#     WHERE user_id = $1"
-#     values = [@id]
-#     results = SqlRunner.run(sql, values)
-#     return results.map { |result| "#{result['name']}: #{result['review']}" }
-#   end
-#
+  def ticket_purchased # reduce customers funds
+    sql = "SELECT films.*
+    FROM films
+    WHERE id = $1"
+    values = [@id]
+    purchase = SqlRunner.run(sql, values)[0]
+    @customer.funds -= purchase['price'].to_i
+    @customer.update
+  end
+
+  def ticket_added #updates customer with new ticket
+    sql = "SELECT films.*
+    FROM films
+    WHERE id =$1"
+    values = [@id]
+    purchase = SqlRunner.run(sql, values)[0]
+    @customer.funds -= purchase['price'].to_i
+    @customer.update
+    ticket = Ticket.new({
+    'customer_id' => self.id,
+    'film_id' => film.id
+    })
+    ticket.save()
+  end
 
 
-#
-#
 
-#
 end
